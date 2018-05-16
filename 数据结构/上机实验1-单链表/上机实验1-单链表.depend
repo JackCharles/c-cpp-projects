@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1444720491 source:e:\c&&c++学习\数据结构\上机实验1-单链表\main.cpp
+	<iostream>
+	<cstdlib>
+	"header.h"
+
+1444719368 e:\c&&c++学习\数据结构\上机实验1-单链表\header.h
+
+1444719522 source:e:\c&&c++学习\数据结构\上机实验1-单链表\source.cpp
+	<iostream>
+	"header.h"
+

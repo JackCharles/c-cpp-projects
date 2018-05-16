@@ -1,0 +1,116 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: test1 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/test1.res" /d "_DEBUG" /d "_AFXDLL" "C:\Documents and Settings\Administrator\桌面\test1-3\test1.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/test1.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Program Files\Microsoft Visual Studio\VC98\MFC\SRC\APPMODUL.CPP"
+"C:\Documents and Settings\Administrator\桌面\test1-3\MainFrm.cpp"
+"C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp"
+"C:\Documents and Settings\Administrator\桌面\test1-3\test1.cpp"
+"C:\Documents and Settings\Administrator\桌面\test1-3\test1Doc.cpp"
+"C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp"
+"C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/test1.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\Administrator\桌面\test1-3\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/test1.pdb" /debug /machine:I386 /out:"Debug/test1.exe" /pdbtype:sept 
+".\Debug\APPMODUL.OBJ"
+".\Debug\MainFrm.obj"
+".\Debug\SettingsDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\test1.obj"
+".\Debug\test1Doc.obj"
+".\Debug\test1View.obj"
+".\Debug\ube.obj"
+".\Debug\test1.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+APPMODUL.CPP
+C:\Program Files\Microsoft Visual Studio\VC98\MFC\SRC\APPMODUL.CPP(54) : warning C4073: initializers put in library initialization area
+MainFrm.cpp
+SettingsDlg.cpp
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(73) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(75) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(77) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(78) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(81) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(83) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(85) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+test1.cpp
+test1Doc.cpp
+test1View.cpp
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(672) : warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(739) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(739) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(739) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(739) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(745) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(745) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(745) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(745) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(751) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(751) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(751) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(751) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(770) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(861) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(861) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(862) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\test1View.cpp(862) : warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+ube.cpp
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(8) : warning C4305: 'argument' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(8) : warning C4305: 'argument' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(8) : warning C4305: 'argument' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(9) : warning C4305: 'initializing' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(10) : warning C4305: 'initializing' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(11) : warning C4305: 'initializing' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(12) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(79) : warning C4305: 'argument' : truncation from 'const double' to 'float'
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(113) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(113) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(137) : warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(137) : warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(137) : warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(140) : warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+C:\Documents and Settings\Administrator\桌面\test1-3\ube.cpp(203) : warning C4305: 'argument' : truncation from 'const double' to 'float'
+Generating Code...
+C:\Documents and Settings\Administrator\桌面\test1-3\SettingsDlg.cpp(94) : warning C4700: local variable 'state' used without having been initialized
+Linking...
+
+
+
+<h3>Results</h3>
+test1.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

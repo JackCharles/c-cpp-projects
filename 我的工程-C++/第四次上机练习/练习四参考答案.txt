@@ -1,0 +1,1427 @@
+类间关联
+
+1. 贼(Thief)偷窃行人，每个行人都有随身带的钱，贼偷窃一个行人，他的钱就增加相应的钱包里的钱数。
+   请给出Thief类和Walker类。
+
+本例使用了四个文件：main.cpp, walker.h,  thief.h, thief.cpp
+
+
+// walker.h
+#ifndef WALKER_H
+#define WALKER_H
+
+class Walker
+{
+public:
+    Walker(int m):money(m) {}
+    int getMoney() const {return money;}
+    void zeroMoney() { money =0; }
+private:
+    int money;
+};
+
+#endif // WALKER_H
+
+
+
+
+// thief.h
+#ifndef THIEF_H
+#define THIEF_H
+
+class Walker;
+class Thief
+{
+public:
+    Thief(int m=0):money(m) {}
+    void stole(Walker& walker);
+    int  getMoney() const { return money;}
+    void zeroMoney() { money =0; }
+private:
+    int money;
+};
+
+#endif // THIEF_H
+
+
+
+//thief.cpp
+#include "Walker.h"
+#include "Thief.h"
+
+void Thief::stole(Walker& walker)
+{
+    money += walker.getMoney();
+    walker.zeroMoney();
+}
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+
+#include "Thief.h"
+#include "Walker.h"
+
+int main()
+{
+    Thief  t1;
+    Walker w1(100),w2(500),w3(800);
+    cout<<"被偷前:"<<endl;
+    cout<<"小偷的钱="<<t1.getMoney()<<endl;
+    cout<<"w1的钱 ="<<w1.getMoney()<<endl;
+    cout<<"w2的钱 ="<<w2.getMoney()<<endl;
+    cout<<"w3的钱 ="<<w3.getMoney()<<endl;
+
+    cout<<endl<<"w1被偷后:"<<endl;
+    t1.stole(w1);
+    cout<<"w1的钱 ="<<w1.getMoney()<<endl;
+    cout<<"小偷的钱="<<t1.getMoney()<<endl<<endl;
+
+    cout<<endl<<"w2被偷后:"<<endl;
+    t1.stole(w2);
+    cout<<"w2的钱 ="<<w2.getMoney()<<endl;
+    cout<<"小偷的钱="<<t1.getMoney()<<endl<<endl;
+
+    cout<<endl<<"w3被偷后:"<<endl;
+    t1.stole(w3);
+    cout<<"w3的钱 ="<<w3.getMoney()<<endl;
+    cout<<"小偷的钱="<<t1.getMoney()<<endl<<endl;
+
+    return 0;
+}
+
+
+
+2. 警察局有多名警察，每个警察抓获一名贼，警察局的声望就增加1点，该警察的奖金就增加100元，贼的金钱减为0。
+   
+   请实现相关的警察局、警察、贼的类。
+   
+   用例可为：警察局S有警察p1,p2,p3,贼有t1,t2,t3,t4, p1抓或t2,t3,p2抓获t4,p3没抓获任何贼。t1的初始金钱为500，
+   t2的初始金钱为800，t3的初始金钱为300，t4的初始金钱为1000，S的初始声望为100，警察的初始奖金为0。
+   输出最终S的声望，每个警察的奖金数。
+
+
+先判断警察局、警察、贼这三个类间的关系。
+警察与贼，只存在抓获被抓的关系----简单的依赖关系即可。
+警察局与贼之间，不存在直接关系，而是通过警察才关联起来。
+警察局和警察之间：
+现实情况是双向关联，警察局包括多名警察，每名警察知道其所属的警察局。
+但在本例中，警察局不需要知道有哪些警察属于本局（没有列出全部警察等类似的功能），
+只需要警察知道其所属警察局即可。   即本例警察局和警察只需单向关联即可。
+
+实现1：（警察局和警察之间，单向关联,thief类同上）
+
+//police.h
+#ifndef POLICE_H
+#define POLICE_H
+
+class PoliceStation;
+class Thief;
+
+class Police
+{
+public:
+    Police(PoliceStation& s);
+    void catchThief(Thief& theThief);
+    int getPrize() const { return prize;}
+private:
+    PoliceStation& station;
+    int prize;
+};
+
+#endif // POLICE_H
+
+
+
+//police.cpp
+#include "police.h"
+#include "Thief.h"
+#include "PoliceStation.h"
+
+Police::Police(PoliceStation& s)
+    :station(s),prize(0)
+{
+}
+
+void Police::catchThief(Thief& theThief)
+{
+    prize += 100;
+    theThief.zeroMoney();
+    station.addHonor(1);
+}
+
+
+//policestation.h
+#ifndef POLICESTATION_H
+#define POLICESTATION_H
+
+class PoliceStation
+{
+public:
+    PoliceStation(int h):honor(h) {}
+    int getHonor() const { return honor;}
+    void addHonor(int h) { honor += h;}
+private:
+    int honor;	//声望
+};
+
+#endif // POLICESTATION_H
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+
+#include "Thief.h"
+#include "Walker.h"
+#include "PoliceStation.h"
+#include "police.h"
+
+int main()
+{ 
+        //用例可为：警察局S有警察p1,p2,p3,贼有t1,t2,t3,t4, p1抓或t2,t3,p2抓获t4,p3没抓获任何贼。t1的初始金钱为500，
+        //t2的初始金钱为800，t3的初始金钱为300，t4的初始金钱为1000，S的初始声望为100，警察的初始奖金为0。
+        //输出最终S的声望，每个警察的奖金数。
+
+         PoliceStation s(100);      //警察局S初始声望
+         Police p1(s),p2(s),p3(s);  //建立3个警察对象
+         Thief t1(500),t2(800),t3(300),t4(1000); //建立4个贼对象
+
+         //p1抓或t2,t3
+         p1.catchThief(t2);
+         p1.catchThief(t3);
+
+         //p2抓获t4
+         p2.catchThief(t4);
+
+         cout<<"警察局的声望为："<<s.getHonor()<<endl;
+         cout<<"警察p1的Prize = "<<p1.getPrize()<<endl;
+         cout<<"警察p2的Prize = "<<p2.getPrize()<<endl;
+         cout<<"警察p3的Prize = "<<p3.getPrize()<<endl;
+
+         cout<<"贼t1的Money = "<<t1.getMoney()<<endl;
+         cout<<"贼t2的Money = "<<t2.getMoney()<<endl;
+         cout<<"贼t3的Money = "<<t3.getMoney()<<endl;
+         cout<<"贼t4的Money = "<<t4.getMoney()<<endl;
+    
+
+    	 return 0;
+}
+
+
+
+实现2：（警察局和警察之间双向关联,thief类同上,双向关联可有多种实现，本例只是一种）
+
+//policestation2.h
+
+#ifndef POLICESTATION2_H
+#define POLICESTATION2_H
+#include <iostream>
+using namespace std;	//便于演示listPolices()功能
+
+class Police;
+class PoliceStation2
+{
+
+public:
+    PoliceStation2(int h):honor(h) {
+        //初始时，警察局无警察
+        for(int i=0;i<TOTAL;i++) {
+            polices[i] = 0;
+        }
+    }
+    int getHonor() const { return honor;}
+    void addHonor(int h) { honor += h;}
+    bool addPolice( Police *  plc ){
+        for(int i=0;i<TOTAL;i++) {
+            if (polices[i] == plc) {
+                return true;
+            }
+            if (polices[i] == 0) {
+                polices[i] = plc;
+                return true;
+            }
+        }
+        return false; //警察添加到警察局失败
+    }
+
+    bool removePolice(Police *  plc) {
+        for(int i=0;i<TOTAL;i++) {
+            if (polices[i] == plc) {
+                polices[i] = 0;
+                return true;
+            }
+        }
+        return false;  //警察离开警察局失败
+    }
+
+    void listPolices() const {
+        for(int i=0;i<TOTAL;i++) {
+            if (polices[i] != 0) {
+                cout<<"有一个警察"<<endl;
+            }
+        }
+    }
+
+private:
+    static const int TOTAL = 30;
+    int honor;	//声望
+    Police * polices[TOTAL];
+};
+
+#endif // POLICESTATION2_H
+
+
+//police.h
+#ifndef POLICE_H
+#define POLICE_H
+
+class PoliceStation2;
+class Thief;
+
+class Police
+{
+public:
+    Police(PoliceStation2& s);
+    void catchThief(Thief& theThief);
+    int getPrize() const { return prize;}
+private:
+    PoliceStation2& station;
+    int prize;
+};
+
+#endif // POLICE_H
+
+
+
+//policestation2.cpp
+#include "police.h"
+
+#include "Thief.h"
+#include "PoliceStation2.h"
+
+Police::Police(PoliceStation2& s)
+    :station(s),prize(0)
+{
+        s.addPolice(this); //添加到警察局
+}
+
+void Police::catchThief(Thief& theThief)
+{
+    prize += 100;
+    theThief.zeroMoney();
+    station.addHonor(1);
+}
+
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+
+#include "Thief.h"
+#include "PoliceStation2.h"
+#include "police.h"
+
+int main()
+{
+        PoliceStation2 s(200);      //警察局S初始声望
+        Police p1(s),p2(s),p3(s);   //建立3个警察对象
+
+        Thief t1(500),t2(800),t3(300),t4(1000); //建立4个贼对象
+
+        //p1抓或t2,t3
+        p1.catchThief(t2);
+        p1.catchThief(t3);
+
+        //p2抓获t4
+        p2.catchThief(t4);
+
+        cout<<"警察局的声望为："<<s.getHonor()<<endl;
+        cout<<"警察p1的Prize = "<<p1.getPrize()<<endl;
+        cout<<"警察p2的Prize = "<<p2.getPrize()<<endl;
+        cout<<"警察p3的Prize = "<<p3.getPrize()<<endl;
+
+        cout<<"贼t1的Money = "<<t1.getMoney()<<endl;
+        cout<<"贼t2的Money = "<<t2.getMoney()<<endl;
+        cout<<"贼t3的Money = "<<t3.getMoney()<<endl;
+        cout<<"贼t4的Money = "<<t4.getMoney()<<endl;
+
+        s.listPolices();
+
+	return 0;
+}
+
+
+3.在2的基础上，再加上1中的类，试一试。
+
+  （略）1+2就够了。
+
+
+4.一个驯马游戏有如下描述：
+
+游戏里有多个英雄(Hero),玩家可以选择其中一个并扮演它,每个英雄有自己的生命力(hitpoint),法力(power)；
+
+游戏中还有马（Horse),每匹马有自己的生命力(hitpoint),攻击力(damage),防御力(defense),速度(speed)。
+
+每个英雄至多可有一匹马作为英雄的坐骑(saddle），初始时，英雄没有坐骑；英雄可以指定某匹马为坐骑。
+
+英雄和其坐骑一起要经常与其它马发生战斗。若失败，则失去原有的坐骑。
+
+战斗中，由英雄一方先发起攻击，然后马再攻击英雄及其坐骑，之后英雄一方再攻击，之后马再攻击英雄一方，。。。。，直到一方胜利。
+战斗中，若英雄的生命力减少至0，则英雄失败；若英雄坐骑的生命力减少至0，则英雄一方失败且失去坐骑；若马的生命力减少至0，则表示英雄一方胜利。
+
+
+英雄每胜利一次，英雄的生命力增加10；
+英雄每失败一次，英雄的法力减少1级，至多减少至1级；
+无论胜利与失败，战斗后，英雄的其它属性值、坐骑、马的属性值，全部恢复。
+
+战斗的算法表示如下：
+英雄一方攻击马，给马造成的伤害(马的生命力减少值)为：坐骑造成的伤害 + 英雄造成的伤害    
+    坐骑造成的伤害为：坐骑的攻击力*(坐骑的速度+英雄的法力) - 马的防御力*马的速度，且值若小于1，则取1
+    英雄造成的伤害：  英雄的法力*20
+    
+马攻击英雄一方，给英雄一方造成的伤害为：
+    给英雄和坐骑各造成的伤害:  马的攻击力*马的速度 - 坐骑的防御力*坐骑的速度，且值若小于1，则取1
+   
+
+根据上述描述，定义相应的类，并给出具体实现，最后给出测试用的main函数。
+
+
+
+
+首先找到问题中需要的类：本例中就需要两个类Hero和Horse,(坐骑的类型也是Horse).
+类间关系：
+1）一个Hero可以有一个坐骑，而且坐骑也参与战斗，所以Hero应时刻知道其坐骑，
+   二者间关系，应是关联关系，不能是依赖关系。根据题意，关联关系最好也不应是
+   合成关系，普通关联或聚合关系更合适。
+2）Hero可以与Horse战斗，只有在战斗时，才需要知道战斗对象。
+   二者是一种依赖关系。
+3）坐骑与Horse，可以是一个类（因为他们的行为都只有战斗，若还有其他不同的职责，也可分成两个类），    因此，二者可以是自依赖的关系。
+
+//hero.h
+#ifndef HERO_H
+#define HERO_H
+
+class Horse;
+class Hero
+{
+public:
+    Hero(int h,int p):hp(h),pw(p),saddle(0){}
+    //取得坐骑
+    Horse * getSaddle() const { return saddle;}
+    //设置坐骑
+    void setSaddle(Horse * horse) { saddle = horse; }
+
+    bool fight(Horse * other);
+
+    int  getHP() const { return hp;}
+    int  reduceHP(int h) { hp -=h; return hp;}
+    int  getPower() const {return pw; }
+
+    void show() const;
+private:
+    bool attackHorse(Horse * horse);
+private:
+    int hp; //生命力(hitpoint)
+    int pw; //法力(power)
+    Horse * saddle;
+};
+
+#endif // HERO_H
+
+
+
+//hero.cpp
+#include <iostream>
+using namespace std;
+
+#include "Hero.h"
+#include "Horse.h"
+
+bool Hero::fight(Horse * other)
+{
+    //保存原始属性值
+    Hero saveHero(hp,pw);
+    Horse saveHorse(*other);
+    Horse * pSaveSaddle = 0;
+
+    if (saddle) pSaveSaddle = new Horse(*saddle);
+
+    //开始战斗
+
+    bool bWin = false;
+    while(1) {
+        if ( attackHorse(other) ) {
+            bWin = true;
+            break;
+        }
+
+        if ( other->attackHero(this) ) {
+            bWin = false;
+            break;
+        }
+    }
+
+    //无论胜利与失败，战斗后，英雄的其它属性值、坐骑、马的属性值，全部恢复。
+    *this = saveHero; //恢复英雄的属性值
+    if (bWin ) {
+        hp += 10; //英雄每胜利一次，英雄的生命力增加10；
+    } else {
+        //英雄每失败一次，英雄的法力减少1级，至多减少至1级；
+        if (--pw <1) pw =1;
+        //马没了
+        if (saddle && saddle->getHP()<=0 ) {
+            saddle = 0;
+        }
+    }
+    //恢复坐骑和马的属性
+    if(saddle) {
+        *saddle = *pSaveSaddle;
+    }
+    delete pSaveSaddle;
+
+    *other  = saveHorse;
+
+    //胜利返回WIN/LOST
+    return bWin;
+}
+
+bool Hero::attackHorse(Horse * other)
+{
+    //英雄一方攻击马，给马造成的伤害(马的生命力减少值)为：
+    //坐骑造成的伤害 + 英雄造成的伤害
+    //坐骑造成的伤害为：坐骑的攻击力*(坐骑的速度+英雄的法力) - 马的防御力*马的速度，且值若小于1，则取1
+    //英雄造成的伤害：  英雄的法力*20
+    int harm = 0;
+    //Horse * saddle = hero.getSaddle();
+    if (saddle) {
+        harm = saddle->getDamage()*(saddle->getSpeed()+pw) - other->getDefense() * other->getSpeed();
+        if (harm<1) harm =1;
+    }
+
+    harm += pw*20;
+
+    if (other->reduceHP(harm) <=0)
+        return true;
+
+    return false;
+}
+
+void Hero::show() const
+{
+    cout<<"当前英雄状态："<<endl;
+    cout<<"生命力="<<hp<<endl;
+    cout<<"法力  ="<<pw<<endl;
+    if (saddle) {
+        cout<<"有坐骑,坐骑状态："<<endl;
+        saddle->show();
+    }else {
+        cout<<"无坐骑"<<endl;
+        cout<<endl;
+    }
+}
+
+
+
+//horse.h
+#ifndef HORSE_H
+#define HORSE_H
+
+class Horse
+{
+public:
+    Horse(int hit,int dam,int def,int spd)
+    {	hp      = hit;
+        damage  = dam;
+        defense = def;
+        speed   = spd;
+    }
+    bool attackHero(Hero * hero);
+
+    int getHP() const 		{ return hp;}
+    int reduceHP(int h) 	{hp -= h; return hp; }
+    int getDamage() const 	{return damage; }
+    int getDefense() const 	{return defense; }
+    int getSpeed() const  	{return speed;}
+    void show() const;
+private:
+    int hp; 	//生命力(hitpoint)
+    int damage; //攻击力(damage)
+    int defense; //防御力(defense)
+    int speed;   //速度(speed)。
+};
+
+#endif // HORSE_H
+
+
+
+
+//horse.cpp
+#include <iostream>
+using namespace std;
+
+#include "Hero.h"
+#include "Horse.h"
+
+bool Horse::attackHero(Hero * hero)
+{
+    //马攻击英雄一方，给英雄一方造成的伤害为：
+    //给英雄和坐骑各造成的伤害:  马的攻击力*马的速度 - 坐骑的防御力*坐骑的速度，且值若小于1，则取1
+    int harm =1;  //这种写法是C语言习惯，现在开始应抛弃。
+		  //这里只是为了兼容VC60。其他环境，应去掉本行，
+                  //而是在使用时声明并定义harm，如int harm = damage * speed; 。
+    Horse * saddle = hero->getSaddle();
+    if (!saddle ) {
+        //无坐骑
+        harm = damage * speed;
+        if(hero->reduceHP(harm)<=0)
+            return true;
+    } else {
+        //有坐骑
+        harm = damage * speed - saddle->defense*saddle->speed;
+        if (harm<1) harm =1;
+        int hpSaddle = saddle->reduceHP(harm); 	//坐骑的剩余HP
+        int hpHero = hero->reduceHP(harm);	//英雄的剩余HP
+        if (hpSaddle<=0) 	return true;
+        if (hpHero<=0) 		return true;
+    }
+    return false;
+}
+
+void Horse::show() const
+{
+    cout<<"生命力="<<hp<<endl;
+    cout<<"攻击力="<<damage<<endl;
+    cout<<"防御力="<<defense<<endl;
+    cout<<"速度="<<speed<<endl;
+    cout<<endl;
+}
+
+//main.cpp
+#include <iostream>
+using namespace std;
+
+#include "Hero.h"
+#include "Horse.h"
+
+int main()
+{
+    bool result = false;
+
+    cout<<"战斗前："<<endl;
+    Hero hero(100,10);
+    hero.show();
+    Horse  h1(50,8,7,5);
+    h1.show();
+
+    cout<<"战斗开始..."<<endl;
+    result = hero.fight(&h1);
+    cout<<"结果="<<(result?"胜利":"失败")<<endl<<endl;
+    cout<<"战斗后:"<<endl;
+    hero.show();
+
+    cout<<"设置了坐骑(h1)"<<endl;
+    hero.setSaddle(&h1);
+    hero.show();
+
+    cout<<"新设马(h2)的状态："<<endl;
+    Horse  h2(500,10,7,9);
+    h2.show();
+
+    cout<<"与h2战斗..."<<endl;
+    result = hero.fight(&h2);
+    cout<<"结果="<<(result?"胜利":"失败")<<endl<<endl;
+
+    cout<<"战斗后:"<<endl;
+    hero.show();
+
+
+    cout<<"新英雄(hero2)"<<endl;
+    Hero  hero2(2000,20);
+    hero2.show();
+
+    cout<<"hero2与h2战斗..."<<endl;
+    result = hero2.fight(&h2);
+    cout<<"结果="<<(result?"胜利":"失败")<<endl<<endl;
+
+    cout<<"战斗后:"<<endl;
+    hero2.show();
+    
+    return 0;
+}
+
+
+
+
+5.用简单双向关联和关联类的形式分别实现男人(Man)和女人(Woman)间的一对一关系。
+  一个未婚男人可以和一个未婚女人结婚；
+  一个已婚男人可以其妻子离婚；
+  一个未婚女人可以和一个未婚男人结婚；
+  一个已婚女人可以其丈夫离婚；
+  一个已婚男人可以“知道”其妻子； 
+  一个已婚女人可以“知道”其丈夫；
+
+
+1)用简单双向关联实现
+(顺便体会一下，以外链方式实现.h的好处。不信的话，可以试一试内联实现是否可行)
+
+//man.h
+#ifndef MAN_H
+#define MAN_H
+
+class Woman;
+
+class Man
+{
+    friend class Woman;  //这里使用友元的目的，是为了不使用Public的void setWife(Woman * w);
+public:
+    Man(char * str);
+    ~Man();
+    Woman * getWife() const {return wife;}
+    void    marray(Woman * w);
+    void    divorce();
+    void    display() const;
+    //void setWife(Woman * w); 
+    //由于使用了友元类，该方法不用了。这样也就从全局角度，
+    //禁止了其它类(除了友元类woman)写访问wife成员。
+private:
+    Woman * wife;
+    char  * name;
+};
+#endif // MAN_H
+
+
+//man.cpp
+#include <iostream>
+using namespace std;
+#include <string.h>
+#include "man.h"
+#include "woman.h"
+
+
+Man::Man(char * str)
+{
+    name = new char[strlen(str)+1];
+    strcpy(name,str);
+    wife = 0;
+}
+Man::~Man()
+{
+    delete[] name;
+}
+
+void    Man::marray(Woman * w)
+{
+    if (w!=0 && wife ==0 && w->hasband==0) {
+        wife = w;
+        wife->hasband = this;
+    }
+}
+void Man::divorce()
+{
+    if( wife != 0) {
+        wife->hasband = 0;
+        wife = 0;
+    }
+}
+
+void  Man::display() const
+{
+    cout<<"名字: "<<name<<endl;
+    if (wife) {
+        cout<<"妻子: "<<wife->name<<endl<<endl;
+    }else {
+        cout<<"妻子: 无"<<endl<<endl;
+    }
+}
+
+
+
+//woman.h
+#ifndef WOMAN_H
+#define WOMAN_H
+
+class Man;
+class Woman
+{
+    friend class Man; //目的同man.h
+public:
+    Woman(char * str);
+    ~Woman();
+    Man *   getHasband() const {return hasband;}
+    void    marray(Man * m);
+    void    divorce();
+    void    display() const;
+private:
+    Man  * hasband;
+    char * name;
+};
+
+#endif // WOMAN_H
+
+
+
+//woman.cpp
+#include <iostream>
+using namespace std;
+#include <string.h>
+#include "woman.h"
+#include "man.h"
+
+Woman::Woman(char * str)
+{
+    name = new char[strlen(str)+1];
+    strcpy(name,str);
+    hasband = 0;
+}
+
+Woman::~Woman()
+{
+    delete[] name;
+}
+
+void Woman::marray(Man * m)
+{
+    if (m!=0 && hasband ==0 && m->wife == 0) {
+        hasband = m;
+        hasband->wife = this;
+    }
+}
+
+void Woman::divorce()
+{
+    if( hasband != 0) {
+        hasband->wife = 0;
+        hasband = 0;
+    }
+}
+
+void  Woman::display() const
+{
+    cout<<"名字: "<<name<<endl;
+    if (hasband) {
+        cout<<"丈夫: "<<hasband->name<<endl<<endl;
+    }else {
+        cout<<"丈夫: 无"<<endl<<endl;
+    }
+}
+
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+#include "man.h"
+#include "woman.h"
+
+int main()
+{
+    Man   m1("管仲"),m2("乐毅"),m3("张良"),m4("韩信");
+    Woman f1("沉鱼"),f2("落雁"),f3("闭月"),f4("羞花");
+
+    cout<<"4个帅哥：--------------------------"<<endl;
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    cout<<"4个美女:---------------------------"<<endl;
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    m1.marray(&f1);
+    m2.marray(&f2);
+    m3.marray(&f3);
+
+    cout<<"成婚3对后：-------------------------"<<endl;
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    m1.divorce();
+    f2.divorce();
+    f2.divorce();
+
+    cout<<"分手2对后:--------------------------"<<endl;
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    return 0;
+}
+
+
+
+
+
+
+2)以关联类的方式实现
+(关联类，可以说即是一个关联，也是一个类。)
+(本例中，只考虑二者婚姻关系中的结婚年份一个属性，
+该属性放Man或Woman中都不合适，而适合放在关联类中。)
+
+(另： 关联的实现，方法不唯一，本例只是一种实现方式)
+
+
+
+//man.h
+#ifndef MAN_H
+#define MAN_H
+
+class Couple;
+class Woman;
+class Man
+{
+    friend class Couple;
+public:
+    Man(char * str);
+    ~Man();
+    char  * getName() const { return name;}
+    Woman * getWife() const;
+    void    display() const;
+private:
+    char   * name;
+    Couple * couple;
+};
+
+#endif // MAN_H
+
+
+
+//woman.h
+#ifndef WOMAN_H
+#define WOMAN_H
+
+class Couple;
+class Man;
+
+class Woman
+{
+    friend class Couple;
+public:
+    Woman(char * str);
+    ~Woman();
+    char  * getName() const { return name;}
+    Man   * getHasband() const;
+    void    display() const;
+private:
+    char   * name;
+    Couple * couple;
+};
+
+#endif // WOMAN_H
+
+
+
+//couple.h
+#ifndef COUPLE_H
+#define COUPLE_H
+
+class Man;
+class Woman;
+class Couples;
+
+class Couple
+{
+    friend class Couples;
+private:
+    Couple( Man *  h, Woman * w,int y,int m,int d);
+    ~Couple();
+public:
+    Man   * getHasband() const { return hasband; }
+    Woman * getWife() const { return wife; }
+    int     getYear() const { return year; }
+private:
+    Man     *   hasband;
+    Woman   *   wife;
+    int         year;
+    int         month;
+    int         day;
+};
+
+#endif // COUPLE_H
+
+
+//couples.h
+#ifndef COUPLES_H
+#define COUPLES_H
+
+class Couple;
+class Man;
+class Woman;
+
+class Couples
+{    
+public:
+    static Couples& getManager() {
+        static Couples mgr;
+        return mgr;
+    }
+public:
+    Couple *    marry(Man * h,Woman * w,int y = -200,int m = 0,int d=0);
+    void        divorce(Couple * couple);
+private:
+    Couples();
+    ~Couples();
+    Couples(const Couples&);
+private:
+    static const int MAXCOUNT = 100;
+    Couple * couples[MAXCOUNT];
+};
+
+#endif // COUPLES_H
+
+
+
+
+
+//man.cpp
+#include <iostream>
+using namespace std;
+#include <string.h>
+#include "man.h"
+#include "woman.h"
+#include "couple.h"
+
+Man::Man(char * str)
+{
+    couple = 0;
+    name = new char[strlen(str)+1];
+    strcpy(name,str);
+}
+Man::~Man()
+{
+    delete[] name;
+}
+
+Woman * Man::getWife() const
+{
+    if (couple) return couple->getWife();
+    return 0;
+}
+
+void  Man::display() const
+{
+    cout<<"名字: "<<name<<endl;
+    if (couple) {
+        cout<<"妻子: "<<couple->getWife()->getName()<<endl;
+        cout<<"成婚日期："<<couple->getYear()<<endl<<endl;
+    }else {
+        cout<<"妻子: 无"<<endl<<endl;
+    }
+}
+
+
+
+//woman.cpp
+#include <iostream>
+using namespace std;
+#include "man.h"
+#include "woman.h"
+#include "couple.h"
+
+Woman::Woman(char * str)
+{
+    couple = 0;
+    name = new char[strlen(str)+1];
+    strcpy(name,str);
+}
+Woman::~Woman()
+{
+    delete[] name;
+}
+
+Man * Woman::getHasband() const
+{
+    if (couple)
+        return couple->getHasband();
+    return 0;
+}
+void  Woman::display() const
+{
+    cout<<"名字: "<<name<<endl;
+    if (couple) {
+        cout<<"丈夫: "<<couple->getHasband()->getName()<<endl;
+        cout<<"成婚日期："<<couple->getYear()<<endl<<endl;
+    }else {
+        cout<<"丈夫: 无"<<endl<<endl;
+    }
+}
+
+
+
+
+//couple.cpp
+#include "couple.h"
+#include "man.h"
+#include "woman.h"
+
+//私有的构造函数
+Couple::Couple(Man * h,Woman * w,int y,int m,int d)
+{
+    hasband = h;
+    wife    = w;
+    hasband->couple = this ;
+    wife->couple    = this;
+    year = y;
+    month = m;
+    day  = d;
+}
+
+Couple::~Couple()
+{
+    hasband->couple = 0;
+    wife->couple    = 0;
+}
+
+
+
+
+//couples.cpp
+#include "couples.h"
+#include "man.h"
+#include "woman.h"
+#include "couple.h"
+
+
+Couple *  Couples::marry(Man * h,Woman * w,int y,int m,int d)
+{
+    for(int i=0;i<MAXCOUNT;i++) {
+        if (couples[i] == 0 ) {
+            couples[i] = new Couple(h,w,y,m,d);
+            return couples[i];
+        }
+    }
+    return 0;
+}
+
+void Couples::divorce(Couple * couple)
+{
+    for(int i=0;i<MAXCOUNT;i++) {
+        if (couples[i] == couple ) {
+            delete couple;
+            couples[i] = 0;
+        }
+    }
+}
+
+
+Couples::Couples()
+{
+    for(int i=0;i<MAXCOUNT;i++) {
+        couples[i] = 0;
+    }
+}
+
+Couples::~Couples()
+{
+    for(int i=0;i<MAXCOUNT;i++) {
+        delete couples[i];
+    }
+}
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+#include "man.h"
+#include "woman.h"
+#include "couple.h"
+#include "couples.h"
+
+
+int main()
+{    
+    Man   m1("管仲"),m2("乐毅"),m3("张良"),m4("韩信");
+    Woman f1("沉鱼"),f2("落雁"),f3("闭月"),f4("羞花");
+
+    Couples& mgr = Couples::getManager();
+
+    cout<<"4个帅哥：--------------------------"<<endl;
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    cout<<"4个美女:---------------------------"<<endl;
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    Couple * c1 = mgr.marry(&m1,&f1,-199);
+    Couple * c2 = mgr.marry(&m2,&f2,-198);
+    Couple * c3 = mgr.marry(&m3,&f3,-197);
+
+    cout<<"成婚3对后：-------------------------"<<endl;
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    cout<<"分手2对后:--------------------------"<<endl;
+    mgr.divorce(c1);
+    mgr.divorce(c2);
+
+    m1.display();
+    m2.display();
+    m3.display();
+    m4.display();
+
+    f1.display();
+    f2.display();
+    f3.display();
+    f4.display();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+6.现有类A和类B
+
+class A {
+public:
+	A(int num):mData(num){    }
+	~A( ) {    }
+	int GetData( ) const    { return mData; } 
+	void SetData(int data)  { mData = data; }
+private:
+	int mData;
+};
+
+class B {
+public:
+      	B(int num=0):pa(new A(num)) {  }
+     	~B( ) {delete pa;}
+      	B(const B& rhs) {
+             pa=new A(*rhs.pa);
+       	}
+      	B& operator=(const B& rhs)  {
+		if ( this!=&rhs )  {
+                 	delete pa;
+ 	                pa=new A(*rhs.pa); 
+        	}
+		return *this;
+	}
+     	A* operator->( ) const {return pa;}
+	void GetData() const   { return pa->GetData();}
+	void SetData(int data) { pa->SetData(data); }
+private:
+ 	A*	pa;
+};
+
+a）现需要以引用计数的方法，重新实现类B，要求类A不得做任何修改。
+b）请在a）的基础上，以Copy On Write的方式修改类B的实现，
+   使得B类对象可以访问成员B类的成员SetData(int);(即可以修改
+   Ｂ类对象中pa指针指向的A类对象的数据成员。也就是说，使用B类对象时，
+   对于以只读方式访问A类的成员，使用引用计数；
+   对于以写方式访问A类的成员，要先进行深复制，然后再写数据)。
+
+
+
+//本例实现中，为了理解方便，将类A改名为Share，将类B改名为User
+
+
+//user.h
+#ifndef USER_H
+#define USER_H
+
+class Share
+{
+public:
+    Share(int num):mData(num) {}
+    int     getData() const     {return mData;}
+    void    setData(int data)   {mData = data;}
+private:
+    int mData;
+};
+
+
+
+class User
+{
+public:
+    User(int num = 0);
+    ~User();
+    User(const User& rhs);
+    User& operator=(const User& rhs);
+    void display(const char * objName) const;
+    int  getData() const;
+    void setData(int data);
+private:
+    void addRef();
+    void releaseRef();
+private:
+    Share * objShared;
+    int   * refCount;
+};
+
+#endif // USER_H
+
+
+
+
+//user.cpp
+#include <iostream>
+using namespace std;
+
+#include "user.h"
+
+User::User(int num)
+    :objShared(new Share(num))
+{    
+    refCount = new int(1);
+}
+
+User::~User()
+{
+    releaseRef();
+}
+
+
+void User::addRef()
+{
+    ++(*refCount);
+}
+
+void User::releaseRef()
+{
+    if (--(*refCount) == 0) {
+        delete refCount;
+        delete objShared;
+    }
+}
+
+//
+User::User( const User& rhs )
+{
+    objShared = rhs.objShared;
+    refCount  = rhs.refCount;
+    addRef();
+}
+
+
+User& User::operator=( const User& rhs)
+{
+    if (this != &rhs) {
+        releaseRef();
+
+        objShared = rhs.objShared;
+        refCount  = rhs.refCount;
+        addRef();
+    }
+    return *this;
+}
+
+int User::getData() const
+{
+    return objShared->getData();
+}
+
+//按Copy On Write执行
+void User::setData(int data)
+{
+    if(*refCount >= 2 ) {
+        releaseRef();
+        objShared = new Share(data);
+        refCount  = new int(1);
+    } else {
+        objShared->setData(data);
+    }
+}
+
+void User::display(const char * objName) const
+{
+    cout<<"对象"<<objName<<"的属性为:"<<endl;
+    cout<<"RefCount="<<*refCount<<endl;
+    cout<<"共享对象的mData值 = "<< objShared->getData()<<endl<<endl;
+}
+
+
+
+//main.cpp
+#include <iostream>
+using namespace std;
+#include "user.h"
+
+int main()
+{
+    User a(100);
+    a.display("a");
+
+    cout<<"执行拷贝构造:  User b(a); 后-----------------"<<endl;
+    User b(a);
+    a.display("a");
+    b.display("b");
+
+    cout<<"又执行拷贝构造:  User c(b); 后-----------------"<<endl;
+    User c(b);
+    a.display("a");
+    b.display("b");
+    c.display("c");
+
+    cout<<"新建对象d和e：  User d(500),e(999); 后-----------------"<<endl;
+    User d(500),e(999);
+    d.display("d");
+    e.display("e");
+
+    cout<<"执行赋值语句：  d = b; 后-----------------"<<endl;
+    d = b;
+    a.display("a");
+    b.display("b");
+    c.display("c");
+    d.display("d");
+    e.display("e");
+
+    cout<<"按Copy On Write执行修改语句：  c.setData(888);, 后-------"<<endl;
+    c.setData(888);
+    a.display("a");
+    b.display("b");
+    c.display("c");
+    d.display("d");
+    e.display("e");
+
+    cout<<"按Copy On Write执行修改语句：  e.setData(250);, 后-------"<<endl;
+    e.setData(250);
+    a.display("a");
+    b.display("b");
+    c.display("c");
+    d.display("d");
+    e.display("e");
+
+
+    cout<<"-------------Over--------------"<<endl;
+    return 0;
+}
+
+
+
+

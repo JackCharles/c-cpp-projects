@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1447419050 source:e:\c&&c++学习\数据结构\树和森林\forest.cpp
+	<iostream>
+	<stack>
+	<queue>
+	"forest.h"
+
+1447417256 e:\c&&c++学习\数据结构\树和森林\forest.h
+
+1447417016 source:e:\c&&c++学习\数据结构\树和森林\main.cpp
+	<iostream>
+	"forest.h"
+

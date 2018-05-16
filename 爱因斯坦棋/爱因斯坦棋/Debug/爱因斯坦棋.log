@@ -1,0 +1,12 @@
+﻿  main.cpp
+  正在生成代码...
+  正在编译...
+  GameCtrl.cpp
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(138): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(156): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(225): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(450): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(465): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+e:\爱因斯坦棋\爱因斯坦棋\gamectrl.cpp(955): warning C4101: “temp”: 未引用的局部变量
+  正在生成代码...
+  爱因斯坦棋.vcxproj -> E:\爱因斯坦棋\Debug\爱因斯坦棋.exe

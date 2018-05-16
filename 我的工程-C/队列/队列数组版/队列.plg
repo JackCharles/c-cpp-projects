@@ -1,0 +1,26 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 队列 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "D:\TEMP\RSP1206.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/队列.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\ZhongJie\Desktop\队列\队列.c"
+]
+Creating command line "cl.exe @D:\TEMP\RSP1206.tmp" 
+<h3>Output Window</h3>
+Compiling...
+队列.c
+C:\Users\ZhongJie\Desktop\队列\队列.c(76) : warning C4013: 'getch' undefined; assuming extern returning int
+
+
+
+<h3>Results</h3>
+队列.obj - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

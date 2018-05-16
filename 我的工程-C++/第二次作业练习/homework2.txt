@@ -1,0 +1,50 @@
+1.下面给出了City类的定义和城市的旅游信息，假定按顺序依次旅游ABCD四个城市。请利用给定的City类，实现main函数，计算并输出分别按线路1和线路2旅游的花费。
+
+class City {
+public:
+    City(int index):customIndex(index) {}
+    int Spend(int days) const 
+       { return days*customIndex; }
+private:
+    int  customIndex;  //消费指数
+
+};
+
+
+
+		A市	B市	C市	D市
+	消费指数	120	80	70	100
+					
+	线路1	7天	6天	5天	4天
+	线路2	4天	5天	6天	7天
+					
+
+2. 公交车在固定线路上行驶，从起点A，经B，C，D，到达终点E。假定每人次车票价格固定为2元，每辆公交车都有最大载客量限制。
+1) 针对给出的Bus类定义，给出完整实现。
+2) 编写main函数，利用Bus类，计算并输出一辆最大载客量为80人的公交车单向运行一趟的总收入。
+class Bus {
+public:
+  Bus( int maxCapacity);
+  void Up(int num);
+  void Down(int num);
+  int GetIncome( ) const;	
+private:
+const int capacity; 
+int   passagers;
+int   income;
+};	
+
+
+车站	    	A	B	C	D	E
+待上车人数	40	50	60	30	0
+待下车人数	0	10	20	15	全体
+
+
+3.
+
+分油问题是一个古典数学问题。问题可描述为： 现有3个容量均为整数的瓶子，初始时，容量最大的瓶子(容量为偶数)是满的，其它两个为空瓶。问：如何通过这3个瓶子，将初始的油平分为两份？ 
+例：容量分别为10斤、7斤、3斤的三个瓶子，10斤瓶子初始是满的。经过：10斤倒7斤，7斤倒3斤，3斤倒10斤，7斤倒3斤，3斤倒10斤，7斤倒3斤，10斤倒7斤，7斤倒3斤，3斤倒10斤。这时，10斤瓶和7斤瓶，就是各装5斤。
+现需要编写一个程序验证分油过程是否正确，请回答： 
+1.	请给出Bottle类的定义和实现。
+2.	利用上边的Bottle类，给出能够验证题中例子的main函数。
+

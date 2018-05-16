@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1432036042 source:j:\第四次上机练习\004\main.cpp
+	<iostream>
+	"headfile.h"
+
+1432033952 j:\第四次上机练习\004\headfile.h
+
+1432036010 source:j:\第四次上机练习\004\headfile.cpp
+	<iostream>
+	"headfile.h"
+

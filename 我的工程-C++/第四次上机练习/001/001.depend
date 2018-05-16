@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1305788244 source:c:\documents and settings\db2admin\桌面\第四次上机练习\001\main.cpp
+	<iostream>
+	"person.h"
+
+1305789700 c:\documents and settings\db2admin\桌面\第四次上机练习\001\person.h
+
+1305784896 c:\documents and settings\db2admin\桌面\第四次上机练习\001\person.cpp
+	<iostream>
+	"person.h"
+
+1305788981 source:c:\documents and settings\db2admin\桌面\第四次上机练习\001\person.cpp
+	<iostream>
+	"person.h"
+

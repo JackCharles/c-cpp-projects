@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1429696035 source:e:\c&&c++学习\我的工程-c++\上机练习1\001\func1.cpp
+	"all_func.h"
+
+1428552032 e:\c&&c++学习\我的工程-c++\上机练习1\001\all_func.h
+
+1429696074 source:e:\c&&c++学习\我的工程-c++\上机练习1\001\func2.cpp
+	"all_func.h"
+
+1429695982 source:e:\c&&c++学习\我的工程-c++\上机练习1\001\main.cpp
+	<iostream>
+	"all_func.h"
+	"contant.h"
+
+1428552786 e:\c&&c++学习\我的工程-c++\上机练习1\001\contant.h
+
+1385316878 source:e:\c&&c++学习\我的工程-c++\上机练习1\001\项目工程\main.cpp
+	<iostream>
+

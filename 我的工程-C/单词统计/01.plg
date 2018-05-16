@@ -1,0 +1,25 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 01 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "S:\TEMP\RSP3106.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/01.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\c语言开发\我的工程\单词统计\01.c"
+]
+Creating command line "cl.exe @S:\TEMP\RSP3106.tmp" 
+<h3>Output Window</h3>
+Compiling...
+01.c
+
+
+
+<h3>Results</h3>
+01.obj - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

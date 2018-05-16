@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1429715375 source:e:\c&&c++学习\我的工程-c++\上机练习1\006\dice\mainapp2.cpp
+	<iostream>
+	"random.h"
+
+1429002670 e:\c&&c++学习\我的工程-c++\上机练习1\006\dice\random.h
+	<limits.h>
+	<windows.h>
+

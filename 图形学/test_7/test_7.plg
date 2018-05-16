@@ -1,0 +1,60 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: test_7 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP78.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/test_7.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"Z:\TEST_7\test_7View.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP78.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP79.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/test_7.pdb" /debug /machine:I386 /out:"Debug/test_7.exe" /pdbtype:sept 
+.\Debug\MainFrm.obj
+.\Debug\StdAfx.obj
+.\Debug\test_7.obj
+.\Debug\test_7Doc.obj
+.\Debug\test_7View.obj
+.\Debug\test_7.res
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP79.tmp"
+<h3>Output Window</h3>
+Compiling...
+test_7View.cpp
+Z:\TEST_7\test_7View.cpp(154) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(155) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(259) : warning C4244: '=' : conversion from 'long' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(259) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(260) : warning C4244: '=' : conversion from 'long' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(260) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(290) : warning C4244: '=' : conversion from 'double' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(291) : warning C4244: '=' : conversion from 'double' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(316) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(317) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(341) : warning C4305: 'initializing' : truncation from 'const double' to 'float'
+Z:\TEST_7\test_7View.cpp(342) : warning C4305: 'initializing' : truncation from 'const double' to 'float'
+Z:\TEST_7\test_7View.cpp(344) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(344) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(344) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(344) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(345) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(345) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Z:\TEST_7\test_7View.cpp(369) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Z:\TEST_7\test_7View.cpp(370) : warning C4244: '=' : conversion from 'float' to 'long', possible loss of data
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/test_7.bsc"  .\Debug\StdAfx.sbr .\Debug\MainFrm.sbr .\Debug\test_7.sbr .\Debug\test_7Doc.sbr .\Debug\test_7View.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+test_7.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

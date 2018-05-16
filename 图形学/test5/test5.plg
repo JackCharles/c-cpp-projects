@@ -1,0 +1,19 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: test5 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/test5.pdb" /debug /machine:I386 /out:"Debug/test5.exe" /pdbtype:sept  .\Debug\MainFrm.obj .\Debug\StdAfx.obj .\Debug\test5.obj .\Debug\test5Doc.obj .\Debug\test5View.obj .\Debug\test5.res "
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+test5.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

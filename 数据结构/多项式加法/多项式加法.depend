@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1445223433 source:e:\c&&c++学习\数据结构\多项式加法\source.cpp
+	<iostream>
+	"header.h"
+
+1445223277 e:\c&&c++学习\数据结构\多项式加法\header.h
+
+1445225864 source:e:\c&&c++学习\数据结构\多项式加法\main.cpp
+	<iostream>
+	"header.h"
+

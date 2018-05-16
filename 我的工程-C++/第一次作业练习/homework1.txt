@@ -1,0 +1,166 @@
+1.输入下列程序
+#include <iostream>
+using namespace std;
+
+int main(int argc,char * argv[])
+{
+    cout << "Hello world!" << endl;
+    cout<<argc<<endl;
+    for(int i=0;i<argc;++i)
+        cout<<argv[i]<<endl;
+    return 0;
+}
+
+编译后执行，给出输出结果。
+在开发环境中指定程序的参数为1234和jlu，再执行给出输出结果。
+
+
+2. 输入代码并执行
+
+#include <iostream>
+using namespace std;
+
+enum WeekDay {
+    MON = 1,
+    TUE,
+    WED,
+    THU,
+    FIR,
+    SAT,
+    SUN =0
+};
+
+const char * Names[] = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
+void Show(WeekDay day)
+{
+    cout<<"The Day is "<<Names[day]<<endl;
+}
+int main()
+{
+    Show(MON);
+    Show(TUE);
+    Show(SUN);
+    return 0;
+}
+理解enum的使用。
+
+若上述代码中增加：
+enum Planet {
+    MOON,
+    SUN
+};
+会怎样？
+
+请在支持c++11的环境下，将
+enum。。。语句改为 class enum 。。。后，
+修改其它必要的代码内容，使得WeekDay和Planet可同时存在。
+
+3.
+//global.h
+const int BUFFER_SIZE = 1024;   ///-------------------1
+int       NUM = 100;		///-------------------2
+void f(int);			///-------------------3
+
+
+//mian.c
+#include <iostream>
+using namespace std;
+
+#include "global.h"
+
+int main()
+{
+        cout<<BUFFER_SIZE<<endl;
+	cout<<NUM<<endl;
+	return 0;
+}
+
+上述代码能否编译并执行。
+
+
+
+
+修改main.cpp为：
+#include <iostream>
+using namespace std;
+
+#include "global.h"
+#include "global.h" //新增
+int main()
+{
+        cout<<BUFFER_SIZE<<endl;
+	cout<<NUM<<endl;
+	return 0;
+}
+
+编译，给出语法错误的原因。
+
+去掉语句global.h中的语句2后，
+再编译。给出语法错误的原因。
+
+
+
+将global.h改为：
+#ifndef GLOBALH
+#define GLOBALH
+
+const int BUFFER_SIZE = 1024;   ///-------------------1
+int       NUM = 100;		///-------------------2
+void f(int);			///-------------------3
+
+#endif
+
+再编译并执行，能否正确编译并执行？
+
+
+
+工程中增加一个two.cpp文件
+//two.cpp
+#include "global.h"
+void g()
+{
+}
+
+重新编译工程，能否正确编译并执行？
+
+
+再去掉global.h中的语句2，能否正确编译并执行。
+
+
+请总结一下单一定义规则，并说明包含警戒的作用。
+
+
+4. 编译并执行下面的程序，理解引用的使用。
+int max21(int a,int b) {return a>b?a:b;}
+int& max22(int& a,int& b) {return a>b?a:b;}
+const int& max23( int& a,  int& b){return a>b?a:b;}
+const int& max24(const int& a,const int& b){return a>b?a:b;}
+int main()
+{
+	int a =3；int b=4;
+	int m1 = max21(a,b);
+	cout<<a<<b<<m1<<endl; //输出344
+	
+	int m2=max22(a,b);
+	cout<<a<<b<<m2<<endl; //输出344
+
+	max22(a,b)=5;
+	m2 = max22(a,b);
+	cout<<a<<b<<m2<<endl; //输出355
+
+	max23(a,b)=6;//错误
+	int m3 = max23(a,b);
+	cout<<a<<b<<m3 <<endl; //输出355
+
+	max24(a,b)=7;//错误
+	int m4 = max24(a,b);
+	cout<<a<<b<<m4 <<endl; //输出355
+
+	return 0;
+}
+
+
+
+
+
+
